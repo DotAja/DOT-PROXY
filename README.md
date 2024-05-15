@@ -1,5 +1,5 @@
 # DOT-PROXY #
 ```
-bash -c "$(wget -qO- s.id/DotProxy)"
+bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/SETUP.sh)"
 
 ```
