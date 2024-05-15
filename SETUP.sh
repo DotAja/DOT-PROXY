@@ -11,12 +11,9 @@ clear
 
 echo "sukses..."
 
-URL_GH="raw.githubusercontent.com/DotAja/DOT-PROXY/main"
-JALUR_DANTED="/etc/danted.conf"
-JALUR_SERVICE="/etc/systemd/system/danted.service"
+wget -O /tmp/danted.conf raw.githubusercontent.com/DotAja/DOT-PROXY/main/danted.conf
 
-wget -q "$URL_GH/danted.conf" -O "$JALUR_DANTED"
-wget -q "$URL_GH/danted.service" -O "$JALUR_SERVICE"
+sudo mv /tmp/danted.conf /etc/danted.conf
 
 systemctl restart danted
 systemctl enable danted
