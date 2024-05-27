@@ -17,6 +17,15 @@ NEW_CONFIG="
 internal: ens3 port = 1080
 external: ens3
 
+internal: ens4 port = 3128
+external: ens4
+
+internal: ens5 port = 8080
+external: ens5
+
+internal: ens6 port = 9999
+external: ens6
+
 method: username none
 
 client pass {
