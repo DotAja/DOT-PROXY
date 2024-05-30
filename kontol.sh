@@ -8,36 +8,25 @@ read -p "Masukkan alamat IP 3: " ip3
 read -p "Masukkan alamat IP 4: " ip4
 
 clear
+echo "setup bahan coli..."
 
-echo "Setup jaringan..."
-
-ip addr add $ip2/24 dev ens4
-ip addr add $ip3/24 dev ens5
-ip addr add $ip4/24 dev ens6
+apt update > /dev/null 2>&1
+apt install dante-server > /dev/null 2>&1
 
 clear
-
-echo "Sukses..."
-clear
-echo "Setup paket..."
-
-# Memastikan untuk menggunakan apt-get untuk distribusi yang tidak menggunakan apt
-if [ -x "$(command -v apt-get)" ]; then
-    apt-get update > /dev/null 2>&1
-    apt-get install -y dante-server > /dev/null 2>&1
-elif [ -x "$(command -v yum)" ]; then
-    yum update -y > /dev/null 2>&1
-    yum install -y dante-server > /dev/null 2>&1
-else
-    echo "Manajer paket tidak didukung."
-    exit 1
-fi
-
-clear
-
-echo "Sukses..."
+echo "sukses..."
 
 CONFIG_FILE="/etc/danted.conf"
+
+clear
+echo "setup network..."
+
+ip addr add $ip2/24 dev ens4 > /dev/null 2>&1
+ip addr add $ip3/24 dev ens5 > /dev/null 2>&1
+ip addr add $ip4/24 dev ens6 > /dev/null 2>&1
+
+clear
+echo "sukses..."
 
 NEW_CONFIG="
 internal: ens3 port = 1080
@@ -67,28 +56,25 @@ client pass {
 pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
     protocol: tcp udp
-}
+}"
 
 if [ -w "$CONFIG_FILE" ]; then
     # Menulis konfigurasi baru ke file
     echo "$NEW_CONFIG" > "$CONFIG_FILE"
-    echo "Konfigurasi Dante berhasil diterapkan."
+    echo "ALAT COLI BERHASIL DI TERAPKAN"
 else
-    echo "Gagal menerapkan konfigurasi Dante: $CONFIG_FILE"
-    echo "Pastikan Anda memiliki izin yang sesuai atau jalankan skrip ini dengan sudo."
+    echo "ALAT COLI GAGAL DI TERAPKAN: $CONFIG_FILE"
+    echo "Pastikan kamu memiliki izin yang diperlukan atau jalankan skrip ini dengan sudo"
 fi
 
-# Restart dan aktifkan layanan Dante
-
 sudo systemctl restart danted
-
 sudo systemctl enable danted
 
 clear
 
 echo "======================================================"
-echo "SOCKS1 : $ip1:1080:dot:dot1"
-echo "SOCKS2 : $ip2:1080:dot:dot2"
-echo "SOCKS3 : $ip3:1080:dot:dot3"
-echo "SOCKS4 : $ip4:1080:dot:dot4"
-echo "================ CREATED BY DOT AJA =================="
+echo "SOCKS1 : $ip1:1080:dot:dot1 "
+echo "SOCKS2 : $ip2:1080:dot:dot2 "
+echo "SOCKS3 : $ip3:1080:dot:dot3 "
+echo "SOCKS4 : $ip4:1080:dot:dot4 "
+echo "==================CREATED BY DOT AJA=================="
