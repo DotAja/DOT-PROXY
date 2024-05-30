@@ -8,6 +8,17 @@ read -p "Masukkan alamat IP 3: " ip3
 read -p "Masukkan alamat IP 4: " ip4
 
 clear
+
+echo "Setup jaringan..."
+
+ip addr add $ip2/24 dev ens4
+ip addr add $ip3/24 dev ens5
+ip addr add $ip4/24 dev ens6
+
+clear
+
+echo "Sukses..."
+clear
 echo "Setup paket..."
 
 # Memastikan untuk menggunakan apt-get untuk distribusi yang tidak menggunakan apt
@@ -23,19 +34,10 @@ else
 fi
 
 clear
+
 echo "Sukses..."
 
 CONFIG_FILE="/etc/danted.conf"
-
-clear
-echo "Setup jaringan..."
-
-ip addr add $ip2/24 dev ens4 > /dev/null 2>&1
-ip addr add $ip3/24 dev ens5 > /dev/null 2>&1
-ip addr add $ip4/24 dev ens6 > /dev/null 2>&1
-
-clear
-echo "Sukses..."
 
 NEW_CONFIG="
 internal: ens3 port = 1080
@@ -77,14 +79,16 @@ else
 fi
 
 # Restart dan aktifkan layanan Dante
+
 sudo systemctl restart danted
+
 sudo systemctl enable danted
 
 clear
 
 echo "======================================================"
-echo "SOCKS1 : $ip1:1080:dot:dot1 "
-echo "SOCKS2 : $ip2:1080:dot:dot2 "
-echo "SOCKS3 : $ip3:1080:dot:dot3 "
-echo "SOCKS4 : $ip4:1080:dot:dot4 "
-echo "==================CREATED BY DOT AJA=================="
+echo "SOCKS1 : $ip1:1080:dot:dot1"
+echo "SOCKS2 : $ip2:1080:dot:dot2"
+echo "SOCKS3 : $ip3:1080:dot:dot3"
+echo "SOCKS4 : $ip4:1080:dot:dot4"
+echo "================ CREATED BY DOT AJA =================="
