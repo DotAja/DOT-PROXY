@@ -8,25 +8,34 @@ read -p "Masukkan alamat IP 3: " ip3
 read -p "Masukkan alamat IP 4: " ip4
 
 clear
-echo "setup bahan coli..."
+echo "Setup paket..."
 
-apt update > /dev/null 2>&1
-apt install dante-server > /dev/null 2>&1
+# Memastikan untuk menggunakan apt-get untuk distribusi yang tidak menggunakan apt
+if [ -x "$(command -v apt-get)" ]; then
+    apt-get update > /dev/null 2>&1
+    apt-get install -y dante-server > /dev/null 2>&1
+elif [ -x "$(command -v yum)" ]; then
+    yum update -y > /dev/null 2>&1
+    yum install -y dante-server > /dev/null 2>&1
+else
+    echo "Manajer paket tidak didukung."
+    exit 1
+fi
 
 clear
-echo "sukses..."
+echo "Sukses..."
 
 CONFIG_FILE="/etc/danted.conf"
 
 clear
-echo "setup network..."
+echo "Setup jaringan..."
 
 ip addr add $ip2/24 dev ens4 > /dev/null 2>&1
 ip addr add $ip3/24 dev ens5 > /dev/null 2>&1
 ip addr add $ip4/24 dev ens6 > /dev/null 2>&1
 
 clear
-echo "sukses..."
+echo "Sukses..."
 
 NEW_CONFIG="
 internal: ens3 port = 1080
@@ -61,12 +70,13 @@ pass {
 if [ -w "$CONFIG_FILE" ]; then
     # Menulis konfigurasi baru ke file
     echo "$NEW_CONFIG" > "$CONFIG_FILE"
-    echo "ALAT COLI BERHASIL DI TERAPKAN"
+    echo "Konfigurasi Dante berhasil diterapkan."
 else
-    echo "ALAT COLI GAGAL DI TERAPKAN: $CONFIG_FILE"
-    echo "Pastikan kamu memiliki izin yang diperlukan atau jalankan skrip ini dengan sudo"
+    echo "Gagal menerapkan konfigurasi Dante: $CONFIG_FILE"
+    echo "Pastikan Anda memiliki izin yang sesuai atau jalankan skrip ini dengan sudo."
 fi
 
+# Restart dan aktifkan layanan Dante
 sudo systemctl restart danted
 sudo systemctl enable danted
 
