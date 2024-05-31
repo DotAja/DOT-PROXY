@@ -14,7 +14,7 @@ echo "sukses..."
 CONFIG_FILE="/etc/danted.conf"
 
 NEW_CONFIG="
-internal: ens3 port = 443
+internal: ens3 port = 1080
 external: ens3
 
 method: username none
@@ -46,5 +46,5 @@ public_ip=$(curl -s ifconfig.me)
 clear
 
 echo "======================================================"
-echo "SOCKS PROXY : $public_ip:443"
+echo "SOCKS PROXY : $public_ip:1080"
 echo "==================CREATED BY DOT AJA=================="
