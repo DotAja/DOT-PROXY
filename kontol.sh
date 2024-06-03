@@ -1,32 +1,13 @@
 #!/bin/bash
 
 clear
-echo "==================CREATED BY DOT AJA=================="
-read -p "Masukkan alamat IP 1: " ip1
-read -p "Masukkan alamat IP 2: " ip2
-read -p "Masukkan alamat IP 3: " ip3
-read -p "Masukkan alamat IP 4: " ip4
-
-clear
-echo "setup bahan coli..."
+echo "download danted..."
 
 apt update > /dev/null 2>&1
 apt install dante-server > /dev/null 2>&1
 
 clear
-echo "sukses..."
-
-CONFIG_FILE="/etc/danted.conf"
-
-clear
-echo "setup network..."
-
-ip addr add $ip2/24 dev ens4 > /dev/null 2>&1
-ip addr add $ip3/24 dev ens5 > /dev/null 2>&1
-ip addr add $ip4/24 dev ens6 > /dev/null 2>&1
-
-clear
-echo "sukses..."
+echo "download sukses..."
 
 NEW_CONFIG="
 internal: ens3 port = 1080
@@ -41,12 +22,7 @@ external: ens5
 internal: ens6 port = 1080
 external: ens6
 
-method: username
-
-user.privileged: dot ens3 dot1
-user.privileged: dot ens4 dot2
-user.privileged: dot ens5 dot3
-user.privileged: dot ens6 dot4
+method: none
 
 client pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
@@ -61,20 +37,25 @@ pass {
 if [ -w "$CONFIG_FILE" ]; then
     # Menulis konfigurasi baru ke file
     echo "$NEW_CONFIG" > "$CONFIG_FILE"
-    echo "ALAT COLI BERHASIL DI TERAPKAN"
+    echo "danted berhasil di setup..."
 else
-    echo "ALAT COLI GAGAL DI TERAPKAN: $CONFIG_FILE"
+    echo "danted gagal di setup: $CONFIG_FILE"
     echo "Pastikan kamu memiliki izin yang diperlukan atau jalankan skrip ini dengan sudo"
 fi
 
 sudo systemctl restart danted
 sudo systemctl enable danted
 
+ip1=$(ip addr show ens3 | grep -oP 'inet \K\S+')
+ip2=$(ip addr show ens4 | grep -oP 'inet \K\S+')
+ip3=$(ip addr show ens5 | grep -oP 'inet \K\S+')
+ip4=$(ip addr show ens6 | grep -oP 'inet \K\S+')
+
 clear
 
 echo "======================================================"
-echo "SOCKS1 : $ip1:1080:dot:dot1 "
-echo "SOCKS2 : $ip2:1080:dot:dot2 "
-echo "SOCKS3 : $ip3:1080:dot:dot3 "
-echo "SOCKS4 : $ip4:1080:dot:dot4 "
+echo "SOCKS1 : $ip1:1080 "
+echo "SOCKS2 : $ip2:1080 "
+echo "SOCKS3 : $ip3:1080 "
+echo "SOCKS4 : $ip4:1080 "
 echo "==================CREATED BY DOT AJA=================="
