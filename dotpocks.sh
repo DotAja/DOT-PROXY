@@ -11,40 +11,53 @@ clear
 
 echo "sukses..."
 
-CONFIG_FILE="/etc/danted.conf"
+JALUR_DANTED="/etc/danted.conf"
+JALUR_SOCKD="/etc/pam.d/sockd"
 
-NEW_CONFIG="
-internal: ens3 port = 1080
+NEW_DANTED="
+logoutput: syslog /var/log/danted.log
+
+internal: 0.0.0.0 port = 1080
 external: ens3
 
-method: username none
+method: username
+
+clientmethod: none
+user.privileged: root
+user.notprivileged: nobody
+user.libwrap: nobody
 
 client pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
-    log: connect disconnect error
+    log: error
 }
 
-pass {
+socks pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
     command: bind connect udpassociate
-    log: connect disconnect error
+    log: error
 }"
 
-if [ -w "$CONFIG_FILE" ]; then
-    # Menulis konfigurasi baru ke file
-    echo "$NEW_CONFIG" > "$CONFIG_FILE"
-    echo "Konfigurasi Dante telah berhasil diperbarui."
-else
-    echo "Tidak dapat menulis ke file konfigurasi: $CONFIG_FILE"
-    echo "Pastikan kamu memiliki izin yang diperlukan atau jalankan skrip ini dengan sudo."
-fi
+NEW_SOCKD="
+auth       required     pam_unix.so
+account    required     pam_unix.so
+"
 
-sudo systemctl restart danted
+echo "$NEW_DANTED" | sudo tee "$JALUR_DANTED" > /dev/null
+
+sudo useradd -m -s /bin/false dot
+echo "dot:dot" | sudo chpasswd
+
+echo "$NEW_SOCKD" | sudo tee "$JALUR_SOCKD" > /dev/null
+
+sudo systemctl restart danted > /dev/null
+sudo systemctl enable danted > /dev/null
 
 public_ip=$(curl -s ifconfig.me)
 
 clear
 
 echo "======================================================"
-echo "SOCKS PROXY : $public_ip:1080"
+echo "SOCKS PROXY"
+echo "$public_ip:1080:dot:dot"
 echo "==================CREATED BY DOT AJA=================="
