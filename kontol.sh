@@ -2,51 +2,44 @@
 
 clear
 echo "==================CREATED BY DOT AJA=================="
-read -p "MASUKAN SANDI : " nama
+read -p "MASUKAN SANDI : " memek
 
-permissions_url="https://raw.githubusercontent.com/username/repository/branch/permissions.txt"
+permissions_url="https://dotaja.x10.bz/akses/akses.txt"
 
 clear
 
-PERMISSIONS_FILE="/tmp/permissions.txt"
+PERMISSIONS_FILE="/tmp/akses.txt"
 curl -s -o $PERMISSIONS_FILE $permissions_url
 
-if ! grep -q "$nama" $PERMISSIONS_FILE; then
-    echo "Nama $nama tidak ditemukan dalam file izin. Skrip tidak akan dijalankan."
+if ! grep -q "$memek" $PERMISSIONS_FILE; then
+    echo "SANDI SALAH, TANYAKAN KEPADA PEMBUAT SCRIPT !!!"
     exit 1
 fi
+clear
+
+echo "KAMU DI IZIN KAN..."
+
+sleep 5
 
 clear
-echo "Nama ditemukan. Lanjutkan dengan instalasi danted..."
-
+echo "==================CREATED BY DOT AJA=================="
 read -p "Masukkan alamat IP 1: " ip1
 read -p "Masukkan alamat IP 2: " ip2
 read -p "Masukkan alamat IP 3: " ip3
 read -p "Masukkan alamat IP 4: " ip4
-read -p "Masukkan username: " username
-read -p "Masukkan password: " password
 
-if ! command -v danted &> /dev/null
-then
-    echo "danted could not be found, installing..."
-    sudo apt update > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "Failed to update package list"
-        exit 1
-    fi
-    sudo apt install dante-server > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "Failed to install dante-server"
-        exit 1
-    fi
-else
-    echo "danted is already installed"
-fi
+sleep 3
 
 clear
-echo "download sukses..."
+echo "==================CREATED BY DOT AJA=================="
+read -p "username socks: " ngaran
+read -p "password socks: " sentot
 
-CONFIG_FILE="/etc/danted.conf"
+clear
+echo "sedang instalasion..."
+
+apt update > /dev/null 2>&1
+apt install dante-server > /dev/null 2>&1
 
 clear
 echo "setup network..."
@@ -56,9 +49,12 @@ sudo ip addr add $ip3/24 dev ens5 > /dev/null 2>&1
 sudo ip addr add $ip4/24 dev ens6 > /dev/null 2>&1
 
 clear
-echo "sukses..."
+echo "network sukses..."
 
-NEW_CONFIG="
+JALUR_DANTED="/etc/danted.conf"
+JALUR_SOCKD="/etc/pam.d/sockd"
+
+NEW_DANTED="
 internal: ens3 port = 1080
 external: ens3
 
@@ -71,7 +67,12 @@ external: ens5
 internal: ens6 port = 1080
 external: ens6
 
-method: none
+method: username
+
+clientmethod: none
+user.privileged: root
+user.notprivileged: nobody
+user.libwrap: nobody
 
 client pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
@@ -81,19 +82,19 @@ client pass {
 pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
     protocol: tcp udp
-}
+}"
 
-$(cat $PERMISSIONS_FILE)
+NEW_SOCKD="
+auth       required     pam_unix.so
+account    required     pam_unix.so
 "
 
-if [ -w "$CONFIG_FILE" ]; then
-    echo "$NEW_CONFIG" | sudo tee "$CONFIG_FILE" > /dev/null
-    echo "setup sukses..."
-else
-    echo "setup gagal: $CONFIG_FILE"
-    echo "Pastikan kamu memiliki izin yang diperlukan atau jalankan skrip ini dengan sudo"
-    exit 1
-fi
+echo "$NEW_DANTED" | sudo tee "$JALUR_DANTED" > /dev/null
+
+sudo useradd -m -s /bin/false $ngaran
+echo "$ngaran:$sentot" | sudo chpasswd
+
+echo "$NEW_SOCKD" | sudo tee "$JALUR_SOCKD" > /dev/null
 
 sudo systemctl restart danted > /dev/null
 sudo systemctl enable danted > /dev/null
@@ -101,8 +102,8 @@ sudo systemctl enable danted > /dev/null
 clear
 
 echo "======================================================"
-echo "SOCKS1 : $ip1:1080"
-echo "SOCKS2 : $ip2:1080"
-echo "SOCKS3 : $ip3:1080"
-echo "SOCKS4 : $ip4:1080"
+echo "SOCKS1 : $ip1:1080$ngaran:$sentot"
+echo "SOCKS2 : $ip2:1080$ngaran:$sentot"
+echo "SOCKS3 : $ip3:1080$ngaran:$sentot"
+echo "SOCKS4 : $ip4:1080$ngaran:$sentot"
 echo "==================CREATED BY DOT AJA=================="
