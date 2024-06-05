@@ -102,8 +102,8 @@ sudo systemctl enable danted > /dev/null
 clear
 
 echo "======================================================"
-echo "SOCKS1 : $ip1:1080$ngaran:$sentot"
-echo "SOCKS2 : $ip2:1080$ngaran:$sentot"
-echo "SOCKS3 : $ip3:1080$ngaran:$sentot"
-echo "SOCKS4 : $ip4:1080$ngaran:$sentot"
+echo "SOCKS1 : $ip1:1080:$ngaran:$sentot"
+echo "SOCKS2 : $ip2:1080:$ngaran:$sentot"
+echo "SOCKS3 : $ip3:1080:$ngaran:$sentot"
+echo "SOCKS4 : $ip4:1080:$ngaran:$sentot"
 echo "==================CREATED BY DOT AJA=================="
