@@ -27,12 +27,12 @@ user.notprivileged: nobody
 user.libwrap: nobody
 
 client pass {
-    from: 0.0.0.0/0 to: 0.0.0.0/0
+    from: 103.181.182.227 to: 0.0.0.0/0
     log: error
 }
 
 socks pass {
-    from: 0.0.0.0/0 to: 0.0.0.0/0
+    from: 103.181.182.227 to: 0.0.0.0/0
     command: bind connect udpassociate
     log: error
 }"
