@@ -23,6 +23,8 @@ read -p "Masukkan alamat IP 1: " ip1
 read -p "Masukkan alamat IP 2: " ip2
 read -p "Masukkan alamat IP 3: " ip3
 read -p "Masukkan alamat IP 4: " ip4
+read -p "Masukkan username: " username
+read -p "Masukkan password: " password
 
 if ! command -v danted &> /dev/null
 then
@@ -93,8 +95,8 @@ else
     exit 1
 fi
 
-sudo systemctl restart danted
-sudo systemctl enable danted
+sudo systemctl restart danted > /dev/null
+sudo systemctl enable danted > /dev/null
 
 clear
 
