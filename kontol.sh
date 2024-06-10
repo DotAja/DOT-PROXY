@@ -1,9 +1,11 @@
 #!/bin/bash
 
+LICENSE_FILE=$(mktemp)
+
 # Function to check if license is used
 is_license_used() {
     local license=$1
-    if grep -q "$license" then
+    if grep -q "$license" "$LICENSE_FILE"; then
         return 0 # License is used
     else
         return 1 # License is not used
@@ -26,7 +28,7 @@ if is_license_used "$license"; then
 fi
 
 # Mark license as used
-echo "$license"
+echo "$license" >> "$LICENSE_FILE"
 
 echo "Script license is correct..."
 
