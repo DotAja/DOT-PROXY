@@ -1,22 +1,34 @@
 #!/bin/bash
 
+# Function to check if license is used
+is_license_used() {
+    local license=$1
+    if grep -q "$license" used_licenses.txt; then
+        return 0 # License is used
+    else
+        return 1 # License is not used
+    fi
+}
+
 clear
-read -p "lisence script: " memek
+read -p "Enter your license: " license
 
-permissions_url="https://dotaja.x10.bz/akses/akses.txt"
-
-clear
-
-PERMISSIONS_FILE="/tmp/akses.txt"
-curl -s -o $PERMISSIONS_FILE $permissions_url
-
-if ! grep -q "$memek" $PERMISSIONS_FILE; then
-    echo "lisence salah, kunjungi situs resmi!!!"
+# Verify license
+if ! curl -s -X POST -d "license=$license" https://dotaja.x10.bz/akses/validate.php | grep -q "valid"; then
+    echo "Invalid or already used license."
     exit 1
 fi
-clear
 
-echo "script license is correct..."
+# Check if license is already used
+if is_license_used "$license"; then
+    echo "License has already been used."
+    exit 1
+fi
+
+# Mark license as used
+echo "$license" >> used_licenses.txt
+
+echo "Script license is correct..."
 
 sleep 5
 
@@ -31,25 +43,25 @@ read -p "Masukkan alamat IP 4: " ip4
 sleep 3
 
 clear
-echo "user dan pass socks"
-read -p "socks name: " ngaran
-read -p "socks pass: " sentot
+echo "User dan pass socks"
+read -p "Socks name: " ngaran
+read -p "Socks pass: " sentot
 
 clear
-echo "sedang instalasion..."
+echo "Sedang instalasi..."
 
 apt update > /dev/null 2>&1
 apt install dante-server > /dev/null 2>&1
 
 clear
-echo "setup network..."
+echo "Setup network..."
 
 sudo ip addr add $ip2/24 dev ens4 > /dev/null 2>&1
 sudo ip addr add $ip3/24 dev ens5 > /dev/null 2>&1
 sudo ip addr add $ip4/24 dev ens6 > /dev/null 2>&1
 
 clear
-echo "network sukses..."
+echo "Network sukses..."
 
 JALUR_DANTED="/etc/danted.conf"
 JALUR_SOCKD="/etc/pam.d/sockd"
