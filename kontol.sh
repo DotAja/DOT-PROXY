@@ -51,7 +51,6 @@ read -p "Masukkan alamat IP 4: " ip4
 sleep 3
 
 clear
-echo "User dan pass socks"
 read -p "Socks name: " ngaran
 read -p "Socks pass: " sentot
 
