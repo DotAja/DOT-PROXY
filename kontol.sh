@@ -3,7 +3,7 @@
 # Function to check if license is used
 is_license_used() {
     local license=$1
-    if grep -q "$license" used_licenses.txt; then
+    if grep -q "$license" then
         return 0 # License is used
     else
         return 1 # License is not used
@@ -26,7 +26,7 @@ if is_license_used "$license"; then
 fi
 
 # Mark license as used
-echo "$license" >> used_licenses.txt
+echo "$license"
 
 echo "Script license is correct..."
 
