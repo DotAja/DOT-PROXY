@@ -30,6 +30,12 @@ fi
 # Mark license as used
 echo "$license" >> "$LICENSE_FILE"
 
+# Check if license is in database
+if ! curl -s -X POST -d "license=$license" https://dotaja.x10.bz/akses/check_license.php | grep -q "exists"; then
+    echo "License not found in the database."
+    exit 1
+fi
+
 echo "Script license is correct..."
 
 sleep 5
