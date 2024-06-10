@@ -1,8 +1,7 @@
 #!/bin/bash
 
 clear
-echo "==================CREATED BY DOT AJA=================="
-read -p "MASUKAN SANDI : " memek
+read -p "lisence script: " memek
 
 permissions_url="https://dotaja.x10.bz/akses/akses.txt"
 
@@ -12,17 +11,18 @@ PERMISSIONS_FILE="/tmp/akses.txt"
 curl -s -o $PERMISSIONS_FILE $permissions_url
 
 if ! grep -q "$memek" $PERMISSIONS_FILE; then
-    echo "SANDI SALAH, TANYAKAN KEPADA PEMBUAT SCRIPT !!!"
+    echo "lisence salah, kunjungi situs resmi!!!"
     exit 1
 fi
 clear
 
-echo "KAMU DI IZIN KAN..."
+echo "script license is correct..."
 
 sleep 5
 
 clear
 echo "==================CREATED BY DOT AJA=================="
+echo "NOTE: masukan alamat ip sesuai urut dari cloudsigma"
 read -p "Masukkan alamat IP 1: " ip1
 read -p "Masukkan alamat IP 2: " ip2
 read -p "Masukkan alamat IP 3: " ip3
@@ -31,9 +31,9 @@ read -p "Masukkan alamat IP 4: " ip4
 sleep 3
 
 clear
-echo "==================CREATED BY DOT AJA=================="
-read -p "username socks: " ngaran
-read -p "password socks: " sentot
+echo "user dan pass socks"
+read -p "socks name: " ngaran
+read -p "socks pass: " sentot
 
 clear
 echo "sedang instalasion..."
@@ -97,13 +97,12 @@ echo "$ngaran:$sentot" | sudo chpasswd
 echo "$NEW_SOCKD" | sudo tee "$JALUR_SOCKD" > /dev/null
 
 sudo systemctl restart danted > /dev/null
-sudo systemctl enable danted > /dev/null
 
 clear
 
-echo "======================================================"
-echo "SOCKS1 : $ip1:1080:$ngaran:$sentot"
-echo "SOCKS2 : $ip2:1080:$ngaran:$sentot"
-echo "SOCKS3 : $ip3:1080:$ngaran:$sentot"
-echo "SOCKS4 : $ip4:1080:$ngaran:$sentot"
+echo "==================PROXY SOCKS========================="
+echo "$ip1:1080:$ngaran:$sentot"
+echo "$ip2:1080:$ngaran:$sentot"
+echo "$ip3:1080:$ngaran:$sentot"
+echo "$ip4:1080:$ngaran:$sentot"
 echo "==================CREATED BY DOT AJA=================="
