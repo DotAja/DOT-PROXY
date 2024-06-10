@@ -6,9 +6,9 @@ LICENSE_FILE=$(mktemp)
 is_license_used() {
     local license=$1
     if grep -q "$license" "$LICENSE_FILE"; then
-        return 0 # License is used
+        return 0
     else
-        return 1 # License is not used
+        return 1 
     fi
 }
 
@@ -36,7 +36,7 @@ sleep 5
 
 clear
 echo "==================CREATED BY DOT AJA=================="
-echo "NOTE: masukan alamat ip sesuai urut dari cloudsigma"
+echo "NOTE: masukan alamat ip sesuai urutan dari cloudsigma"
 read -p "Masukkan alamat IP 1: " ip1
 read -p "Masukkan alamat IP 2: " ip2
 read -p "Masukkan alamat IP 3: " ip3
@@ -114,7 +114,7 @@ sudo systemctl restart danted > /dev/null
 
 clear
 
-echo "==================PROXY SOCKS========================="
+echo "======================PROXY SOCKS====================="
 echo "$ip1:1080:$ngaran:$sentot"
 echo "$ip2:1080:$ngaran:$sentot"
 echo "$ip3:1080:$ngaran:$sentot"
