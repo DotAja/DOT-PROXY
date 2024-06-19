@@ -1,45 +1,5 @@
 #!/bin/bash
 
-LICENSE_FILE=$(mktemp)
-
-# Function to check if license is used
-is_license_used() {
-    local license=$1
-    if grep -q "$license" "$LICENSE_FILE"; then
-        return 0
-    else
-        return 1 
-    fi
-}
-
-clear
-read -p "Enter your license: " license
-
-# Verify license
-if ! curl -s -X POST -d "license=$license" https://dotaja.x10.bz/akses/validate.php | grep -q "valid"; then
-    echo "Invalid or already used license."
-    exit 1
-fi
-
-# Check if license is already used
-if is_license_used "$license"; then
-    echo "License has already been used."
-    exit 1
-fi
-
-# Mark license as used
-echo "$license" >> "$LICENSE_FILE"
-
-# Check if license is in database
-if ! curl -s -X POST -d "license=$license" https://dotaja.x10.bz/akses/check_license.php | grep -q "exists"; then
-    echo "License not found in the database."
-    exit 1
-fi
-
-echo "Script license is correct..."
-
-sleep 5
-
 clear
 echo "==================CREATED BY DOT AJA=================="
 echo "NOTE: masukan alamat ip sesuai urutan dari cloudsigma"
