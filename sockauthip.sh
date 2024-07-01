@@ -22,17 +22,14 @@ external: ens3
 method: none
 
 clientmethod: none
-user.privileged: root
-user.notprivileged: nobody
-user.libwrap: nobody
 
 client pass {
-    from: 159.89.201.94 to: 0.0.0.0/0
+    from: 159.89.201.94/24 to: 0.0.0.0/0
     log: error
 }
 
 socks pass {
-    from: 159.89.201.94 to: 0.0.0.0/0
+    from: 159.89.201.94/24 to: 0.0.0.0/0
     command: bind connect udpassociate
     log: error
 }"
