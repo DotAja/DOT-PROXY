@@ -24,12 +24,12 @@ method: none
 clientmethod: none
 
 client pass {
-    from: 159.89.201.94/24 to: 0.0.0.0/0
+    from: 152.42.178.71/24 to: 0.0.0.0/0
     log: error
 }
 
 socks pass {
-    from: 159.89.201.94/24 to: 0.0.0.0/0
+    from: 152.42.178.71/24 to: 0.0.0.0/0
     command: bind connect udpassociate
     log: error
 }"
