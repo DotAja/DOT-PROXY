@@ -14,22 +14,24 @@ if ! command -v dialog &> /dev/null; then
 fi
 
 # Buat skrip menu di /usr/bin
-MENU_SCRIPT_PATH="/usr/bin/menu"
+MENU_SCRIPT_PATH="/usr/bin/my_terminal_menu.sh"
 cat << 'EOF' > $MENU_SCRIPT_PATH
 #!/bin/bash
 
 HEIGHT=15
 WIDTH=60
 CHOICE_HEIGHT=6
-BACKTITLE="DOT TERMINAL"
-TITLE="DOT PROXY"
-MENU="PILIH ALAT:"
+BACKTITLE="My Terminal Menu"
+TITLE="Main Menu"
+MENU="Choose one of the following options:"
 
 OPTIONS=(
-    1 "Start danted"
-    2 "Stop danted"
-    3 "BELOM JADI"
-    4 "Exit"
+    1 "Option 1 Description"
+    2 "Option 2 Description"
+    3 "Option 3 Description"
+    4 "Stop danted"
+    5 "Start danted"
+    6 "Exit"
 )
 
 while true; do
@@ -45,20 +47,28 @@ while true; do
 
     case $CHOICE in
         1)
-            echo "Starting danted service..."
-            sudo systemctl start danted
-            echo "danted service started."
+            echo "You chose Option 1"
+            # Tambahkan perintah untuk Option 1 di sini
             ;;
         2)
-            echo "Stopping danted service..."
-            sudo systemctl stop danted
-            echo "danted service stopped."
+            echo "You chose Option 2"
+            # Tambahkan perintah untuk Option 2 di sini
             ;;
         3)
             echo "You chose Option 3"
             # Tambahkan perintah untuk Option 3 di sini
             ;;
         4)
+            echo "Stopping danted service..."
+            sudo systemctl stop danted
+            echo "danted service stopped."
+            ;;
+        5)
+            echo "Starting danted service..."
+            sudo systemctl start danted
+            echo "danted service started."
+            ;;
+        6)
             echo "Exiting"
             break
             ;;
@@ -74,7 +84,7 @@ EOF
 chmod +x $MENU_SCRIPT_PATH
 
 # Tambahkan skrip ke ~/.bashrc jika belum ada
-BASHRC_LINE='if [ -t 1 ]; then /usr/bin/menu; fi'
+BASHRC_LINE='if [ -t 1 ]; then /usr/bin/my_terminal_menu.sh; fi'
 grep -qxF "$BASHRC_LINE" /home/$SUDO_USER/.bashrc || echo "$BASHRC_LINE" >> /home/$SUDO_USER/.bashrc
 
 # Sumber ulang ~/.bashrc
