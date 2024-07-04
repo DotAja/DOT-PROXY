@@ -1,0 +1,48 @@
+NC='\e[0m'
+DEFBOLD='\e[39;1m'
+RB='\e[31;1m'
+GB='\e[32;1m'
+YB='\e[33;1m'
+BB='\e[34;1m'
+MB='\e[35;1m'
+CB='\e[35;1m'
+WB='\e[37;1m'
+domain=$(cat /usr/local/etc/xray/domain)
+ISP=$(cat /usr/local/etc/xray/org)
+CITY=$(cat /usr/local/etc/xray/city)
+WKT=$(cat /usr/local/etc/xray/timezone)
+DATE=$(date -R | cut -d " " -f -4)
+MYIP=$(curl -sS ipv4.icanhazip.com)
+clear
+echo -e "${BB}————————————————————————————————————————————————————————${NC}"
+echo -e "           ${WB}----- [ PROXY SOCKS DOT ] -----${NC}              "
+echo -e "${BB}————————————————————————————————————————————————————————${NC}"
+echo -e " ${YB}Provider${NC}         ${WB}: $ISP"
+echo -e " ${YB}Timezone${NC}         ${WB}: $WKT${NC}"
+echo -e " ${YB}City${NC}             ${WB}: $CITY${NC}"
+echo -e " ${YB}Date${NC}             ${WB}: $DATE${NC}"
+echo -e "${BB}————————————————————————————————————————————————————————${NC}"
+echo -e "                ${WB}----- [ MENU ] -----${NC}               "
+echo -e "${BB}————————————————————————————————————————————————————————${NC}"
+echo -e " ${MB}[1]${NC} ${YB}START SOCKS5${NC}"
+echo -e " ${MB}[2]${NC} ${YB}STOP SOCKS5${NC}"
+echo -e " ${MB}[3]${NC} ${YB}INSTAL SOCKS5${NC}"
+echo -e " ${MB}[4]${NC} ${YB}Lanjutannya${NC}"
+echo -e "${BB}————————————————————————————————————————————————————————${NC}"
+echo -e ""
+read -p " Select Menu :  "  opt
+echo -e ""
+case $opt in
+1) sudo systemctl start danted ;;
+2) sudo systemctl stop danted ;;
+3) bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/sockauthip.sh)" ;;
+4) clear ;
+echo ""
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+echo ""
+echo ""
+menu ;;
+x) exit ;;
+*) echo -e "${YB}salah input${NC}" ; sleep 1 ; menu ;;
+esac
