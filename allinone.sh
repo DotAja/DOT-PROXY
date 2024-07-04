@@ -74,7 +74,7 @@ EOF
 chmod +x $MENU_SCRIPT_PATH
 
 # Tambahkan skrip ke ~/.bashrc jika belum ada
-BASHRC_LINE='if [ -t 1 ]; then /usr/bin/my_terminal_menu.sh; fi'
+BASHRC_LINE='if [ -t 1 ]; then /usr/bin/menu; fi'
 grep -qxF "$BASHRC_LINE" /home/$SUDO_USER/.bashrc || echo "$BASHRC_LINE" >> /home/$SUDO_USER/.bashrc
 
 # Sumber ulang ~/.bashrc
