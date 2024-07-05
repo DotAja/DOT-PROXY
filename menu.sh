@@ -33,8 +33,7 @@ echo -e "                ${WB}----- [ MENU ] -----${NC}               "
 echo -e "${BB}————————————————————————————————————————————————————————${NC}"
 echo -e " ${MB}[1]${NC} ${YB}START SOCKS5${NC}"
 echo -e " ${MB}[2]${NC} ${YB}STOP SOCKS5${NC}"
-echo -e " ${MB}[3]${NC} ${YB}INSTAL SOCKS5${NC}"
-echo -e " ${MB}[4]${NC} ${YB}CHANGE IP AKSES${NC}"
+echo -e " ${MB}[3]${NC} ${YB}CHANGE IP AKSES${NC}"
 echo -e "${BB}————————————————————————————————————————————————————————${NC}"
 echo -e ""
 read -p " Select Menu :  "  opt
@@ -57,17 +56,9 @@ case $opt in
    echo ""
    echo ""
    menu ;;
-3) bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/sockauthip.sh)"
+3) changeip
    clear
-   echo "instal sukses"
-   echo ""
-   read -n 1 -s -r -p "Press any key to back on menu"
-   echo ""
-   echo ""
-   menu ;;
-4) bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/changeip.sh)"
-   clear
-   echo "sukses change ip"
+   echo "SUKSES CHANGE IP"
    echo ""
    read -n 1 -s -r -p "Press any key to back on menu"
    echo ""
