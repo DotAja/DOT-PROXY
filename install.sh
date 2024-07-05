@@ -22,8 +22,8 @@ wget -O /usr/bin/changeip $linkdot/changeip.sh  > /dev/null 2>&1
 chmod +x /usr/bin/menu  > /dev/null 2>&1
 chmod +x /usr/bin/changeip  > /dev/null 2>&1
 
-sudo echo 'clear' >> ~/.bashrc  > /dev/null 2>&1
-sudo echo 'menu' >> ~/.bashrc > /dev/null 2>&1
+echo 'clear' >> ~/.bashrc
+echo 'menu' >> ~/.bashrc
 
 JALUR_DANTED="/etc/danted.conf"
 
