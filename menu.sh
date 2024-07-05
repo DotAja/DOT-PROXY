@@ -13,18 +13,12 @@ PORT=1080
 DATE=$(date -R | cut -d " " -f -4)
 MYIP=$(curl -sS ipv4.icanhazip.com)
 
-# Function to check danted status
 check_danted_status() {
     if systemctl is-active --quiet danted; then
         echo -e "${GB}RUNNING${NC}"
     else
         echo -e "${RB}STOPPED${NC}"
     fi
-}
-
-# Function to get daily bandwidth usage
-get_daily_bandwidth() {
-    vnstat -d | grep "`date +%d` " | awk '{print $8, $9}'
 }
 
 clear
@@ -34,14 +28,13 @@ echo -e "${BB}——————————————————————
 echo -e " ${YB}IP:PORT${NC}          ${WB}: $MYIP:$PORT${NC}"
 echo -e " ${YB}DATE${NC}             ${WB}: $DATE${NC}"
 echo -e " ${YB}STATUS${NC}           ${WB}: $(check_danted_status)${NC}"
-echo -e " ${YB}BANDWIDTH HARI INI${NC} ${WB}: $(get_daily_bandwidth)${NC}"
 echo -e "${BB}————————————————————————————————————————————————————————${NC}"
 echo -e "                ${WB}----- [ MENU ] -----${NC}               "
 echo -e "${BB}————————————————————————————————————————————————————————${NC}"
 echo -e " ${MB}[1]${NC} ${YB}START SOCKS5${NC}"
 echo -e " ${MB}[2]${NC} ${YB}STOP SOCKS5${NC}"
 echo -e " ${MB}[3]${NC} ${YB}INSTAL SOCKS5${NC}"
-echo -e " ${MB}[4]${NC} ${YB}Lanjutannya${NC}"
+echo -e " ${MB}[4]${NC} ${YB}CHANGE IP AKSES${NC}"
 echo -e "${BB}————————————————————————————————————————————————————————${NC}"
 echo -e ""
 read -p " Select Menu :  "  opt
@@ -57,15 +50,24 @@ case $opt in
    menu ;;
 2) clear
    sudo systemctl stop danted
+   clear
    echo "SOCKS BERHENTI"
    echo ""
    read -n 1 -s -r -p "Press any key to back on menu"
    echo ""
    echo ""
    menu ;;
-3) bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/sockauthip.sh)" ;;
-4) clear
+3) bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/sockauthip.sh)"
+   clear
+   echo "instal sukses"
    echo ""
+   read -n 1 -s -r -p "Press any key to back on menu"
+   echo ""
+   echo ""
+   menu ;;
+4) bash -c "$(wget -qO- raw.githubusercontent.com/DotAja/DOT-PROXY/main/changeip.sh)"
+   clear
+   echo "sukses change ip"
    echo ""
    read -n 1 -s -r -p "Press any key to back on menu"
    echo ""
