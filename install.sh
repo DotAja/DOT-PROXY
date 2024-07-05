@@ -9,12 +9,12 @@ CB='\e[36;1m'
 WB='\e[37;1m'
 
 clear
-echo -e "${GB}[ INFO ]${NC} ${YB}Setup and installing...${NC}"
+echo -e "${GB}[ INFO ]${NC} ${YB}Setup and installing${NC}"
 
 apt update > /dev/null 2>&1
 apt install dante-server > /dev/null 2>&1
 
-linkdot="raw.githubusercontent.com/DotAja/DOT-PROXY/main"
+linkdot="https://raw.githubusercontent.com/DotAja/DOT-PROXY/main"
 
 wget -O /usr/bin/menu $linkdot/menu.sh  > /dev/null 2>&1
 wget -O /usr/bin/changeip $linkdot/changeip.sh  > /dev/null 2>&1
@@ -50,8 +50,10 @@ socks pass {
 
 echo "$NEW_DANTED" | sudo tee "$JALUR_DANTED" > /dev/null
 
-sudo systemctl restart danted > /dev/null
-sudo systemctl enable danted > /dev/null
+systemctl restart danted > /dev/null
+systemctl enable danted > /dev/null
+
+clear
 
 echo -e "${GB}[ INFO ]${NC} ${YB}Sukses...${NC}"
 
@@ -65,10 +67,10 @@ echo -e "                    ${WB}XRAY SCRIPT BY DOT${NC}"
 echo -e "${BB}—————————————————————————————————————————————————————————${NC}"
 echo -e "              ${WB}»»» Proxy Socks5 akses Ip only «««${NC}  "
 echo -e "${BB}—————————————————————————————————————————————————————————${NC}"
-echo -e "  ${YB}- Proxy Socks5${NC}            : ${YB}1080${NC}"
 echo -e "  ${GB}- NOTE : untuk menggunakan proxy socks wajib change ip${NC}"
 echo -e "${BB}————————————————————————————————————————————————————————${NC}"
 echo ""
 echo ""
 read -n 1 -s -r -p "Press any key to Reboot"
+sleep 5
 reboot
